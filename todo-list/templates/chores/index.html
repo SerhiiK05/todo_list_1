@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>TODO List</h1>
+  <ul>
+    <li><strong>Tasks:</strong> {{ num_tasks }}</li>
+    <li><strong>Tags:</strong> {{ num_tags }}</li>
+  </ul>
+
+  <p>You have visited this page
+      {{ num_visits }} time{{ num_visits|pluralize }}.
+  </p>
+
+{% endblock %}
