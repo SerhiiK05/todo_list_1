@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>
+    TODO List
+    <a href="{% url 'chores:task-create' %}"
+       class="btn btn-primary link-to-page">
+      Add task
+    </a>
+  </h1>
+
+  {% if task_list %}
+    <div class="task-list">
+      {% for task in task_list %}
+        <div class="task-item">
+          <div class="task-info">
+            <h3>
+              {{ task.content }}
+              {% if task.complete %}
+                <span style="color: green; font-weight: bold;">Done</span>
+              {% else %}
+                <span style="color: red; font-weight: bold;">Not done</span>
+              {% endif %}
+            </h3>
+            <div class="task-actions" style="text-align: right;">
+            {% if task.complete %}
+              <a href="{% url 'chores:task-toggle' task.pk %}"
+                 class="btn btn-warning">Undo</a>
+            {% else %}
+              <a href="{% url 'chores:task-toggle' task.pk %}"
+                 class="btn btn-success">Complete</a>
+            {% endif %}
+            </div>
+            <p>Created: {{ task.datetime}} <strong style="color: #e57373;">
+              Deadline: {{ task.deadline }}</strong>
+            <p><strong style="color: #888;">Tags:
+              {% for tag in task.tags.all %}
+                <span>
+                  {{ tag.name }}
+                </span></strong>
+                <span class="tag-actions">
+                  <a href="{% url 'chores:tag-update' pk=tag.id %}"
+                     class="btn btn-secondary">Update</a>
+                  <a href="{% url 'chores:tag-delete' pk=tag.id %}"
+                     class="btn btn-secondary">Delete</a>
+                </span>
+                {% if not forloop.last %}, {% endif %}
+                <hr style="border-top: 1px solid #ccc; margin: 10px 0;">
+              {% endfor %}
+            </p>
+          </div>
+        </div>
+      {% endfor %}
+  {% else %}
+    <p>There are no tasks in chores.</p>
+  {% endif %}
+{% endblock %}

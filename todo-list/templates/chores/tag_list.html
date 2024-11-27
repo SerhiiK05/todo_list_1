@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>
+    Tags
+    <a href="{% url 'chores:tag-create' %}"
+       class="btn btn-primary link-to-page">
+      Add
+    </a>
+  </h1>
+  {% if tag_list %}
+    <table class="table">
+      <tr>
+        <th>Name</th>
+        <th>Update</th>
+        <th>Delete</th>
+      </tr>
+      {% for tag in tag_list %}
+        <tr>
+          <td>
+              {{ tag.name }}
+          </td>
+          <td>
+              <a href="{% url 'chores:tag-update' pk=tag.id %}">
+                Update
+              </a>
+            </td>
+            <td>
+              <a style="color: red"
+                href="{% url 'chores:tag-delete' pk=tag.id %}">
+                Delete
+              </a>
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+  {% else %}
+    <p>There are no tags in chores</p>
+  {% endif %}
+{% endblock %}
